@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+bun.lockb
+package-lock.json
+dump.rdb
+
+# Credentials
+.env
+
+# macOS
+**/.DS_Store
+
+# Compiled TypeScript
+*.js
+
+# Frontend JS
+!packages/**/static/js/*.js
+
+# Database
+*.sqlite
+
+# Submodules
+packages/edb

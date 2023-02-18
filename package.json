@@ -1,0 +1,8 @@
+{
+  "name": "lyra",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "^0.5.2-canary.c57b37d"
+  }
+}
