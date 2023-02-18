@@ -1,8 +1,11 @@
 {
   "name": "lyra",
-  "module": "index.ts",
+  "module": "proxy.ts",
   "type": "module",
   "devDependencies": {
-    "bun-types": "^0.5.2-canary.c57b37d"
+    "bun-types": "canary"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
   }
 }

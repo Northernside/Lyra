@@ -1,0 +1,12 @@
+[
+    {
+        "origin": {
+            "host": "localhost",
+            "port": 8080
+        },
+        "target": {
+            "host": "localhost",
+            "port": 4700
+        }
+    }
+]
