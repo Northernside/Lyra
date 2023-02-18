@@ -10,10 +10,10 @@ const hosts = require("./hosts.json"),
         create: true
     });
 
-db.run(`CREATE TABLE IF NOT EXISTS requests ("origin" json NOT NULL, "target" json NOT NULL);`);
+db.run(`CREATE TABLE IF NOT EXISTS requests ("origin" json NOT NULL, "target" json NOT NULL, "timestamp" bigint NOT NULL);`);
 
 Bun.listen({
-    hostname: "localhost",
+    hostname: "0.0.0.0",
     port: parseInt(process.env.LYRA_PORT),
     socket: {
         data(client, data) {
@@ -36,7 +36,7 @@ Bun.listen({
                                 port: host.target.port
                             });
 
-                            db.run(`INSERT INTO requests VALUES ($origin, $target)`, {$origin: origin, $target: target});
+                            db.run(`INSERT INTO requests VALUES ($origin, $target, $timestamp)`, {$origin: origin, $target: target, $timestamp: Date.now()});
                             console.log(`[SERVER -> CLIENT] > ${message.toString()}`);
                             client.write(message.toString());
                         }
