@@ -17,7 +17,9 @@ Bun.listen({
     port: parseInt(process.env.LYRA_PORT),
     socket: {
         data(client, data) {
-            const host = hosts.filter(host => host.origin.host == client.listener.hostname && host.origin.port == client.listener.port)[0]
+            const hostname = data.split("\r\n")[1].split(" ")[1],
+                host = hosts.filter(host => host.origin.host == hostname)[0];
+
             if (host) {
                 Bun.connect({
                     hostname: host.target.host,
@@ -29,8 +31,8 @@ Bun.listen({
                         },
                         data(_socket, message) {
                             const origin = JSON.stringify({
-                                host: client.listener.hostname,
-                                port: client.listener.port
+                                host: hostname,
+                                port: 80
                             }), target = JSON.stringify({
                                 host: host.target.host,
                                 port: host.target.port
