@@ -10,7 +10,7 @@ const hosts = require("./hosts.json"),
         create: true
     });
 
-db.run(`CREATE TABLE IF NOT EXISTS requests ("origin" json NOT NULL, "target" json NOT NULL, "timestamp" bigint NOT NULL);`);
+db.run(`CREATE TABLE IF NOT EXISTS requests ("origin_host" text NOT NULL, "origin_port" int NOT NULL, "target_host" text NOT NULL, "target_port" int NOT NULL, "time" time NOT NULL);`);
 
 Bun.listen({
     hostname: "0.0.0.0",
@@ -30,15 +30,7 @@ Bun.listen({
                             server.write(data.toString());
                         },
                         data(_socket, message) {
-                            const origin = JSON.stringify({
-                                host: hostname,
-                                port: 80
-                            }), target = JSON.stringify({
-                                host: host.target.host,
-                                port: host.target.port
-                            });
-
-                            db.run(`INSERT INTO requests VALUES ($origin, $target, $timestamp)`, {$origin: origin, $target: target, $timestamp: Date.now()});
+                            db.run(`INSERT INTO requests VALUES ($origin_host, $origin_port, $target_host, $target_port, $timestamp)`, {$origin_host: hostname, $origin_port: 80, $target_host: host.target.host, $target_port: host.target.port, $timestamp: Date.now()});
                             console.log(`[SERVER -> CLIENT] > ${message.toString()}`);
                             client.write(message.toString());
                         }
