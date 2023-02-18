@@ -17,7 +17,7 @@ Bun.listen({
     port: parseInt(process.env.LYRA_PORT),
     socket: {
         data(client, data) {
-            const hostname = data.split("\r\n")[1].split(" ")[1],
+            const hostname = data.toString().split("\r\n")[1].split(" ")[1],
                 host = hosts.filter(host => host.origin.host == hostname)[0];
 
             if (host) {
