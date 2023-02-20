@@ -30,7 +30,7 @@ Bun.listen({
                             server.write(data.toString());
                         },
                         data(_socket, message) {
-                            db.run(`INSERT INTO requests VALUES ($origin_host, $origin_port, $target_host, $target_port, $timestamp)`, {$origin_host: hostname, $origin_port: 80, $target_host: host.target.host, $target_port: host.target.port, $timestamp: Date.now() / 1000});
+                            db.run(`INSERT INTO requests VALUES ($origin_host, $origin_port, $target_host, $target_port, $timestamp)`, {$origin_host: hostname, $origin_port: 80, $target_host: host.target.host, $target_port: host.target.port, $timestamp: new Date().toISOString().split(":")[0] + ":00:00Z"});
                             console.log(`[SERVER -> CLIENT] > ${message.toString()}`);
                             client.write(message.toString());
                         }
